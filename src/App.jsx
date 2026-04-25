@@ -20,16 +20,11 @@ function App() {
   const [editingSite, setEditingSite] = useState(null)
   const [showEditForm, setShowEditForm] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
-  const [backgroundImage, setBackgroundImage] = useState('')
+  const [timestamp, setTimestamp] = useState(Date.now())
 
   // 获取站点数据
   useEffect(() => {
     fetchSites()
-  }, [])
-
-  // 获取背景图
-  useEffect(() => {
-    fetchRandomWallpaper()
   }, [])
 
   // 提取分类
@@ -208,31 +203,17 @@ function App() {
     }
   }
 
-  // 获取随机壁纸
-  const fetchRandomWallpaper = async () => {
-    try {
-      // 由于接口是重定向，我们需要使用不同的方式获取
-      const response = await fetch('https://api.xsot.cn/bing?jump=true')
-      if (response.ok) {
-        // 从响应中获取重定向后的URL
-        const imageUrl = response.url
-        setBackgroundImage(imageUrl)
-      }
-    } catch (error) {
-      console.error('Error fetching wallpaper:', error)
-    }
-  }
-
   return (
     <div style={{ 
       minHeight: '100vh', 
-      backgroundColor: '#f3f4f6',
+      backgroundColor: '#1a1a2e',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
+      backgroundImage: `url(https://api.xsot.cn/bing?jump=true&t=${timestamp})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
-      backgroundAttachment: 'fixed'
+      backgroundAttachment: 'fixed',
+      transition: 'background 0.5s ease'
     }}>
       {/* 顶部导航栏 */}
       <header style={{ 
