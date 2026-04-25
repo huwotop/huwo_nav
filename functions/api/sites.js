@@ -27,10 +27,8 @@ export async function onRequest(context) {
       // 如果是添加分类
       if (data.category && !data.name && !data.url) {
         const sites = JSON.parse(await env.NAV_SITES.get('all_sites') || '[]');
-        // 分类已存在，直接返回站点列表
         const categoryExists = sites.some(site => site.category === data.category);
         if (!categoryExists) {
-          // 创建一个占位站点来存储分类
           const placeholderSite = {
             id: `category_${Date.now()}`,
             name: `分类占位: ${data.category}`,
@@ -52,9 +50,7 @@ export async function onRequest(context) {
       const site = data;
       const sites = JSON.parse(await env.NAV_SITES.get('all_sites') || '[]');
       
-      // 生成唯一 ID
       site.id = Date.now().toString();
-      // 添加时间戳
       site.createdAt = new Date().toISOString();
       
       sites.push(site);
