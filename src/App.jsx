@@ -20,17 +20,27 @@ function App() {
   const [editingSite, setEditingSite] = useState(null)
   const [showEditForm, setShowEditForm] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
+  const [backgroundImage, setBackgroundImage] = useState('')
 
   // 获取站点数据
   useEffect(() => {
     fetchSites()
   }, [])
 
+  // 获取背景图
+  useEffect(() => {
+    fetchRandomWallpaper()
+  }, [])
+
   // 提取分类
   useEffect(() => {
     const uniqueCategories = [...new Set(sites.map(site => site.category).filter(Boolean))]
     setCategories(uniqueCategories)
-  }, [sites])
+    // 如果有分类且没有选中分类，默认选中第一个
+    if (uniqueCategories.length > 0 && !activeCategory) {
+      setActiveCategory(uniqueCategories[0])
+    }
+  }, [sites, activeCategory])
 
   // 过滤当前分类的站点
   const filteredSites = sites.filter(site => {
@@ -198,16 +208,37 @@ function App() {
     }
   }
 
+  // 获取随机壁纸
+  const fetchRandomWallpaper = async () => {
+    try {
+      // 由于接口是重定向，我们需要使用不同的方式获取
+      const response = await fetch('https://api.xsot.cn/bing?jump=true')
+      if (response.ok) {
+        // 从响应中获取重定向后的URL
+        const imageUrl = response.url
+        setBackgroundImage(imageUrl)
+      }
+    } catch (error) {
+      console.error('Error fetching wallpaper:', error)
+    }
+  }
+
   return (
     <div style={{ 
       minHeight: '100vh', 
       backgroundColor: '#f3f4f6',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed'
     }}>
       {/* 顶部导航栏 */}
       <header style={{ 
-        backgroundColor: 'white',
-        boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        backdropFilter: 'blur(10px)'
       }}>
         <div style={{ 
           maxWidth: '1280px',
@@ -431,32 +462,10 @@ function App() {
         display: 'flex',
         flexWrap: 'wrap',
         gap: '8px',
-        borderBottom: '1px solid #e5e7eb'
+        borderBottom: '1px solid #e5e7eb',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(10px)'
       }}>
-        <button
-          onClick={() => setActiveCategory('')}
-          style={{ 
-            padding: '8px 16px',
-            borderRadius: '6px 6px 0 0',
-            backgroundColor: activeCategory === '' ? '#2563eb' : 'white',
-            color: activeCategory === '' ? 'white' : '#4b5563',
-            cursor: 'pointer',
-            border: activeCategory === '' ? '1px solid #2563eb' : '1px solid #e5e7eb',
-            borderBottom: activeCategory === '' ? '1px solid #2563eb' : '1px solid #e5e7eb'
-          }}
-          onMouseEnter={(e) => {
-            if (activeCategory !== '') {
-              e.currentTarget.style.backgroundColor = '#f3f4f6'
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (activeCategory !== '') {
-              e.currentTarget.style.backgroundColor = 'white'
-            }
-          }}
-        >
-          全部
-        </button>
         {categories.map(category => (
           <button
             key={category}
@@ -489,16 +498,21 @@ function App() {
       {/* 站点网格 */}
       <main style={{ 
         maxWidth: '1280px',
-        margin: '0 auto',
-        padding: '24px 16px'
+        margin: '20px auto',
+        padding: '24px 16px',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(10px)',
+        borderRadius: '8px'
       }}>
         {/* 分类标题 */}
-        <h2 style={{ 
-          fontSize: '18px',
-          fontWeight: '600',
-          color: '#111827',
-          marginBottom: '16px'
-        }}>{activeCategory || '全部'}</h2>
+        {activeCategory && (
+          <h2 style={{ 
+            fontSize: '18px',
+            fontWeight: '600',
+            color: '#111827',
+            marginBottom: '16px'
+          }}>{activeCategory}</h2>
+        )}
         
         {/* 站点图标网格 */}
         <div style={{ 
