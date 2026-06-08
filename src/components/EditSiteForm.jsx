@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { normalizeUrl } from '../utils/site'
 
 const EditSiteForm = ({ site, categories, onUpdate, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -35,11 +36,7 @@ const EditSiteForm = ({ site, categories, onUpdate, onCancel }) => {
       return
     }
 
-    // 确保 URL 格式正确
-    let url = formData.url
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      url = 'https://' + url
-    }
+    const url = normalizeUrl(formData.url)
 
     setLoading(true)
 
@@ -49,7 +46,7 @@ const EditSiteForm = ({ site, categories, onUpdate, onCancel }) => {
         ...formData,
         url
       }
-      onUpdate(updatedSite)
+      await onUpdate(updatedSite)
     } catch (error) {
       console.error('Error updating site:', error)
       setError('更新失败，请重试')

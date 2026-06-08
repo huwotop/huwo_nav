@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import './App.css'
 import AddSiteForm from './components/AddSiteForm'
 import ImportBookmarks from './components/ImportBookmarks'
 import EditSiteForm from './components/EditSiteForm'
+import { fallbackIcon, getFaviconUrl } from './utils/site'
 
 function App() {
   const [sites, setSites] = useState([])
@@ -10,7 +11,6 @@ function App() {
   const [showAddForm, setShowAddForm] = useState(false)
   const [showImportForm, setShowImportForm] = useState(false)
   const [showPasswordForm, setShowPasswordForm] = useState(false)
-  const [categories, setCategories] = useState([])
   const [activeCategory, setActiveCategory] = useState('')
   const [editMode, setEditMode] = useState(false)
   const [password, setPassword] = useState('')
@@ -20,7 +20,11 @@ function App() {
   const [editingSite, setEditingSite] = useState(null)
   const [showEditForm, setShowEditForm] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
-  const [timestamp, setTimestamp] = useState(Date.now())
+  const backgroundTimestamp = useMemo(() => Date.now(), [])
+  const categories = useMemo(
+    () => [...new Set(sites.map(site => site.category).filter(Boolean))],
+    [sites]
+  )
 
   // 获取站点数据
   useEffect(() => {
@@ -29,13 +33,11 @@ function App() {
 
   // 提取分类
   useEffect(() => {
-    const uniqueCategories = [...new Set(sites.map(site => site.category).filter(Boolean))]
-    setCategories(uniqueCategories)
     // 如果有分类且没有选中分类，默认选中第一个
-    if (uniqueCategories.length > 0 && !activeCategory) {
-      setActiveCategory(uniqueCategories[0])
+    if (categories.length > 0 && !activeCategory) {
+      setActiveCategory(categories[0])
     }
-  }, [sites, activeCategory])
+  }, [categories, activeCategory])
 
   // 过滤当前分类的站点
   const filteredSites = sites.filter(site => {
@@ -88,13 +90,18 @@ function App() {
     if (selectedSites.length === 0) return
 
     try {
-      await fetch('/api/sites', {
+      const response = await fetch('/api/sites', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ ids: selectedSites })
       })
+
+      if (!response.ok) {
+        throw new Error('删除站点失败')
+      }
+
       setSites(prev => prev.filter(site => !selectedSites.includes(site.id)))
       setSelectedSites([])
     } catch (error) {
@@ -112,7 +119,7 @@ function App() {
   }
 
   // 处理导入完成
-  const handleImportComplete = (importedCount) => {
+  const handleImportComplete = () => {
     // 重新加载数据，确保本地存储中的数据被正确显示
     const localData = localStorage.getItem('nav_sites')
     setSites(localData ? JSON.parse(localData) : [])
@@ -208,7 +215,7 @@ function App() {
       minHeight: '100vh', 
       backgroundColor: '#1a1a2e',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      backgroundImage: `url(https://api.xsot.cn/bing?jump=true&t=${timestamp})`,
+      backgroundImage: `url(https://api.xsot.cn/bing?jump=true&t=${backgroundTimestamp})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
@@ -546,7 +553,7 @@ function App() {
                 }}
               >
                 <img 
-                  src={`https://favicon.im/zh/${site.url}`} 
+                  src={getFaviconUrl(site.url)}
                   alt={`${site.name} icon`} 
                   style={{ 
                     width: '40px',
@@ -554,7 +561,7 @@ function App() {
                     objectFit: 'contain'
                   }}
                   onError={(e) => {
-                    e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"%3E%3Crect width="40" height="40" rx="8" fill="%23f3f4f6"/%3E%3Cpath d="M10 20H30" stroke="%239ca3af" strokeWidth="2" strokeLinecap="round"/%3E%3Cpath d="M20 10V30" stroke="%239ca3af" strokeWidth="2" strokeLinecap="round"/%3E%3C/svg%3E'
+                    e.target.src = fallbackIcon
                   }}
                 />
               </a>

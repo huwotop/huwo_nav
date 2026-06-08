@@ -1,8 +1,8 @@
 import React from 'react'
+import { fallbackIcon, getFaviconUrl } from '../utils/site'
 
 const SiteCard = ({ site, onSelect, isSelected }) => {
-  // 从 favicon.im 获取图标
-  const faviconUrl = `https://favicon.im/zh/${site.url}`
+  const faviconUrl = getFaviconUrl(site.url)
 
   return (
     <div 
@@ -23,7 +23,7 @@ const SiteCard = ({ site, onSelect, isSelected }) => {
                 alt={`${site.name} icon`} 
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"%3E%3Crect width="40" height="40" rx="8" fill="%23f3f4f6"/%3E%3Cpath d="M10 20H30" stroke="%239ca3af" strokeWidth="2" strokeLinecap="round"/%3E%3Cpath d="M20 10V30" stroke="%239ca3af" strokeWidth="2" strokeLinecap="round"/%3E%3C/svg%3E'
+                  e.target.src = fallbackIcon
                 }}
               />
             </a>

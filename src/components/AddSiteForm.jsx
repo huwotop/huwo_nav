@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { normalizeUrl } from '../utils/site'
 
 const AddSiteForm = ({ onAdd, onCancel, categories }) => {
   const [formData, setFormData] = useState({
@@ -24,11 +25,7 @@ const AddSiteForm = ({ onAdd, onCancel, categories }) => {
       return
     }
 
-    // 确保 URL 格式正确
-    let url = formData.url
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      url = 'https://' + url
-    }
+    const url = normalizeUrl(formData.url)
 
     setLoading(true)
 
