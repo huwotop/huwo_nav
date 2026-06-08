@@ -526,17 +526,25 @@ function App() {
               }}
               onClick={() => editMode && handleEditSite(site)}
             >
-              <div style={{ 
-                width: '60px',
-                height: '60px',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                marginBottom: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#f3f4f6'
-              }}>
+              <a
+                href={site.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`打开 ${site.name}`}
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  marginBottom: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#f3f4f6',
+                  cursor: 'pointer'
+                }}
+              >
                 <img 
                   src={`https://favicon.im/zh/${site.url}`} 
                   alt={`${site.name} icon`} 
@@ -549,7 +557,7 @@ function App() {
                     e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"%3E%3Crect width="40" height="40" rx="8" fill="%23f3f4f6"/%3E%3Cpath d="M10 20H30" stroke="%239ca3af" strokeWidth="2" strokeLinecap="round"/%3E%3Cpath d="M20 10V30" stroke="%239ca3af" strokeWidth="2" strokeLinecap="round"/%3E%3C/svg%3E'
                   }}
                 />
-              </div>
+              </a>
               <a 
                 href={site.url} 
                 target="_blank" 

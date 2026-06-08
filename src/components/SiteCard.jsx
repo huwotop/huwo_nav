@@ -11,7 +11,13 @@ const SiteCard = ({ site, onSelect, isSelected }) => {
       <div className="p-4">
         <div className="flex items-start justify-between mb-2">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-md overflow-hidden flex-shrink-0">
+            <a
+              href={site.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`打开 ${site.name}`}
+              className="w-10 h-10 rounded-md overflow-hidden flex-shrink-0"
+            >
               <img 
                 src={faviconUrl} 
                 alt={`${site.name} icon`} 
@@ -20,7 +26,7 @@ const SiteCard = ({ site, onSelect, isSelected }) => {
                   e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"%3E%3Crect width="40" height="40" rx="8" fill="%23f3f4f6"/%3E%3Cpath d="M10 20H30" stroke="%239ca3af" strokeWidth="2" strokeLinecap="round"/%3E%3Cpath d="M20 10V30" stroke="%239ca3af" strokeWidth="2" strokeLinecap="round"/%3E%3C/svg%3E'
                 }}
               />
-            </div>
+            </a>
             <div>
               <h3 className="font-medium text-gray-900 truncate max-w-[160px]">{site.name}</h3>
               {site.category && (
