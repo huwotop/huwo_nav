@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+﻿import { useState, useEffect, useMemo } from 'react'
 import './App.css'
 import AddSiteForm from './components/AddSiteForm'
 import ImportBookmarks from './components/ImportBookmarks'
@@ -89,7 +89,7 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('鍒犻櫎绔欑偣澶辫触')
+        throw new Error('閸掔娀娅庣粩娆戝仯婢惰精瑙?)
       }
 
       setSites(prev => prev.filter(site => !selectedSites.includes(site.id)))
@@ -120,7 +120,7 @@ function App() {
       setShowPasswordForm(false)
       setPasswordError('')
     } else {
-      setPasswordError('瀵嗙爜閿欒锛岃閲嶆柊杈撳叆')
+      setPasswordError('鐎靛棛鐖滈柨娆掝嚖閿涘矁顕柌宥嗘煀鏉堟挸鍙?)
     }
   }
 
@@ -129,7 +129,7 @@ function App() {
 
     try {
       if (categories.includes(categoryName.trim())) {
-        alert('鍒嗙被宸插瓨鍦?)
+        alert('閸掑棛琚鎻掔摠閸?)
         return
       }
 
@@ -142,7 +142,7 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('娣诲姞鍒嗙被澶辫触')
+        throw new Error('濞ｈ濮為崚鍡欒婢惰精瑙?)
       }
 
       const updatedSites = await response.json()
@@ -151,7 +151,7 @@ function App() {
       setShowAddCategoryForm(false)
     } catch (error) {
       console.error('Error adding category:', error)
-      alert('鍒嗙被娣诲姞鎴愬姛锛堟湰鍦版ā鎷燂級')
+      alert('閸掑棛琚ǎ璇插閹存劕濮涢敍鍫熸拱閸︾増膩閹风噦绱?)
       setNewCategory('')
       setShowAddCategoryForm(false)
     }
@@ -173,7 +173,7 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('鏇存柊绔欑偣澶辫触')
+        throw new Error('閺囧瓨鏌婄粩娆戝仯婢惰精瑙?)
       }
 
       const updatedSites = await response.json()
@@ -185,7 +185,7 @@ function App() {
       setSites(prev => prev.map(site => site.id === updatedSite.id ? updatedSite : site))
       setEditingSite(null)
       setShowEditForm(false)
-      alert('绔欑偣鏇存柊鎴愬姛锛堟湰鍦版ā鎷燂級')
+      alert('缁旀瑧鍋ｉ弴瀛樻煀閹存劕濮涢敍鍫熸拱閸︾増膩閹风噦绱?)
     }
   }
 
@@ -223,7 +223,7 @@ function App() {
               fontSize: '24px',
               fontWeight: 'bold',
               color: '#111827'
-            }}>鎴戠殑涓汉缃戝潃瀵艰埅</h1>
+            }}>閹存垹娈戞稉顏冩眽缂冩垵娼冪€佃壈鍩?/h1>
             {editMode ? (
               <button 
                 onClick={() => setEditMode(false)}
@@ -236,7 +236,7 @@ function App() {
                   border: 'none'
                 }}
               >
-                閫€鍑虹紪杈?              </button>
+                闁偓閸戣櫣绱潏?              </button>
             ) : (
               <button 
                 onClick={() => setShowPasswordForm(true)}
@@ -249,8 +249,7 @@ function App() {
                   border: 'none'
                 }}
               >
-                缂栬緫
-              </button>
+                缂傛牞绶?              </button>
             )}
           </div>
           
@@ -264,7 +263,7 @@ function App() {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="杈撳叆鎼滅储鍐呭..."
+              placeholder="鏉堟挸鍙嗛幖婊呭偍閸愬懎顔?.."
               style={{
                 flex: 1,
                 padding: '8px 12px',
@@ -284,8 +283,7 @@ function App() {
                 border: 'none'
               }}
             >
-              鎼滅储
-            </button>
+              閹兼粎鍌?            </button>
           </div>
           
           {editMode && (
@@ -306,7 +304,7 @@ function App() {
                   border: 'none'
                 }}
               >
-                娣诲姞绔欑偣
+                濞ｈ濮炵粩娆戝仯
               </button>
               <button 
                 onClick={() => setShowImportForm(true)}
@@ -319,7 +317,7 @@ function App() {
                   border: 'none'
                 }}
               >
-                瀵煎叆鏀惰棌澶?              </button>
+                鐎电厧鍙嗛弨鎯版婢?              </button>
               <button 
                 onClick={() => setShowAddCategoryForm(true)}
                 style={{ 
@@ -331,7 +329,7 @@ function App() {
                   border: 'none'
                 }}
               >
-                娣诲姞鍒嗙被
+                濞ｈ濮為崚鍡欒
               </button>
               {filteredSites.length > 0 && (
                 <button 
@@ -351,7 +349,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  {selectedSites.length === filteredSites.length ? '鍙栨秷鍏ㄩ€? : '鍏ㄩ€?}
+                  {selectedSites.length === filteredSites.length ? '閸欐牗绉烽崗銊┾偓? : '閸忋劑鈧?}
                 </button>
               )}
               {selectedSites.length > 0 && (
@@ -366,7 +364,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  鎵归噺鍒犻櫎 ({selectedSites.length})
+                  閹靛綊鍣洪崚鐘绘珟 ({selectedSites.length})
                 </button>
               )}
             </div>
@@ -447,7 +445,7 @@ function App() {
                 href={site.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`鎵撳紑 ${site.name}`}
+                aria-label={`閹垫挸绱?${site.name}`}
                 onClick={(e) => !editMode && e.stopPropagation()}
                 style={{
                   width: '60px',
@@ -519,8 +517,7 @@ function App() {
                       cursor: 'pointer'
                     }}
                   >
-                    缂栬緫
-                  </button>
+                    缂傛牞绶?                  </button>
                 </div>
               )}
             </div>
@@ -542,7 +539,7 @@ function App() {
           onCancel={() => setShowImportForm(false)} 
         />
       )}
-      {/* 瀵嗙爜琛ㄥ崟 */}
+      {/* 鐎靛棛鐖滅悰銊ュ礋 */}
       {showPasswordForm && (
         <div style={{
           position: 'fixed',
@@ -568,7 +565,7 @@ function App() {
               fontWeight: '600',
               color: '#111827',
               margin: '0 0 16px 0'
-            }}>璇疯緭鍏ュ瘑鐮佷互杩涘叆缂栬緫妯″紡</h2>
+            }}>鐠囩柉绶崗銉ョ槕閻椒浜掓潻娑樺弳缂傛牞绶Ο鈥崇础</h2>
             <form onSubmit={handlePasswordSubmit}>
               <div style={{
                 marginBottom: '16px'
@@ -579,7 +576,7 @@ function App() {
                   fontWeight: '500',
                   color: '#374151',
                   marginBottom: '6px'
-                }}>瀵嗙爜</label>
+                }}>鐎靛棛鐖?/label>
                 <input
                   type="password"
                   value={password}
@@ -622,8 +619,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  鍙栨秷
-                </button>
+                  閸欐牗绉?                </button>
                 <button
                   type="submit"
                   style={{
@@ -635,8 +631,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  纭畾
-                </button>
+                  绾喖鐣?                </button>
               </div>
             </form>
           </div>
@@ -647,6 +642,7 @@ function App() {
 }
 
 export default App
+
 
 
 
