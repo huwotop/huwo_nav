@@ -38,7 +38,8 @@ function App() {
     }
   }, [categories, activeCategory])
 
-  // 杩囨护褰撳墠鍒嗙被鐨勭珯鐐?  const filteredSites = sites.filter(site => {
+  // 过滤当前分类的站点
+  const filteredSites = sites.filter(site => {
     const categoryMatch = !activeCategory || site.category === activeCategory
     const searchMatch = !searchTerm || 
                        site.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -900,6 +901,7 @@ function App() {
 }
 
 export default App
+
 
 
 
