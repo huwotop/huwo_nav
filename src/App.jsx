@@ -55,7 +55,7 @@ function App() {
       
       const contentType = response.headers.get('content-type')
       if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('Response is not JSON')
+        throw new Error('Error')
       }
       
       const data = await response.json()
@@ -89,7 +89,7 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('閸掔娀娅庣粩娆戝仯婢惰精瑙?)
+        throw new Error('Delete failed?)
       }
 
       setSites(prev => prev.filter(site => !selectedSites.includes(site.id)))
@@ -642,6 +642,7 @@ function App() {
 }
 
 export default App
+
 
 
 
