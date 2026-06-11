@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import './App.css'
 import AddSiteForm from './components/AddSiteForm'
 import ImportBookmarks from './components/ImportBookmarks'
@@ -495,17 +495,35 @@ function App() {
                 {site.name}
               </a>
               {editMode && (
-                <input
-                  type="checkbox"
-                  checked={selectedSites.includes(site.id)}
-                  onChange={() => handleSiteSelect(site.id)}
-                  style={{ 
-                    width: '16px',
-                    height: '16px',
-                    marginTop: '8px',
-                    color: '#2563eb'
-                  }}
-                />
+                <div style={{ display: 'flex', gap: '8px', marginTop: '8px', alignItems: 'center' }}>
+                  <input
+                    type="checkbox"
+                    checked={selectedSites.includes(site.id)}
+                    onChange={() => handleSiteSelect(site.id)}
+                    style={{ 
+                      width: '16px',
+                      height: '16px',
+                      color: '#2563eb'
+                    }}
+                  />
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditSite(site);
+                    }}
+                    style={{
+                      fontSize: '12px',
+                      backgroundColor: '#3b82f6',
+                      color: 'white',
+                      borderRadius: '4px',
+                      border: 'none',
+                      padding: '2px 6px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    编辑
+                  </button>
+                </div>
               )}
             </div>
           ))}
