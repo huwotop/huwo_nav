@@ -526,10 +526,111 @@ function App() {
           onCancel={() => setShowImportForm(false)} 
         />
       )}
+      {/* 密码表单 */}
+      {showPasswordForm && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            padding: '24px',
+            maxWidth: '400px',
+            width: '100%'
+          }}>
+            <h2 style={{
+              fontSize: '18px',
+              fontWeight: '600',
+              color: '#111827',
+              margin: '0 0 16px 0'
+            }}>请输入密码以进入编辑模式</h2>
+            <form onSubmit={handlePasswordSubmit}>
+              <div style={{
+                marginBottom: '16px'
+              }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '6px'
+                }}>密码</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px',
+                    borderRadius: '6px',
+                    border: '1px solid #d1d5db',
+                    fontSize: '14px'
+                  }}
+                  required
+                />
+                {passwordError && (
+                  <p style={{
+                    color: '#dc2626',
+                    fontSize: '12px',
+                    marginTop: '4px'
+                  }}>{passwordError}</p>
+                )}
+              </div>
+              <div style={{
+                display: 'flex',
+                gap: '8px',
+                justifyContent: 'flex-end'
+              }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPasswordForm(false)
+                    setPassword('')
+                    setPasswordError('')
+                  }}
+                  style={{
+                    padding: '8px 16px',
+                    backgroundColor: '#f3f4f6',
+                    color: '#4b5563',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    border: 'none'
+                  }}
+                >
+                  取消
+                </button>
+                <button
+                  type="submit"
+                  style={{
+                    padding: '8px 16px',
+                    backgroundColor: '#2563eb',
+                    color: 'white',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    border: 'none'
+                  }}
+                >
+                  确定
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
 
 export default App
+
 
 
