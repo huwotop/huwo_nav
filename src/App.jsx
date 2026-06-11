@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+﻿import { useState, useEffect, useMemo } from 'react'
 import './App.css'
 import AddSiteForm from './components/AddSiteForm'
 import ImportBookmarks from './components/ImportBookmarks'
@@ -26,21 +26,19 @@ function App() {
     [sites]
   )
 
-  // 获取站点数据
+  // 鑾峰彇绔欑偣鏁版嵁
   useEffect(() => {
     fetchSites()
   }, [])
 
-  // 提取分类
+  // 鎻愬彇鍒嗙被
   useEffect(() => {
-    // 如果有分类且没有选中分类，默认选中第一个
-    if (categories.length > 0 && !activeCategory) {
+    // 濡傛灉鏈夊垎绫讳笖娌℃湁閫変腑鍒嗙被锛岄粯璁ら€変腑绗竴涓?    if (categories.length > 0 && !activeCategory) {
       setActiveCategory(categories[0])
     }
   }, [categories, activeCategory])
 
-  // 过滤当前分类的站点
-  const filteredSites = sites.filter(site => {
+  // 杩囨护褰撳墠鍒嗙被鐨勭珯鐐?  const filteredSites = sites.filter(site => {
     const categoryMatch = !activeCategory || site.category === activeCategory
     const searchMatch = !searchTerm || 
                        site.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -49,18 +47,15 @@ function App() {
     return categoryMatch && searchMatch
   })
 
-  // 获取所有站点
-  const fetchSites = async () => {
+  // 鑾峰彇鎵€鏈夌珯鐐?  const fetchSites = async () => {
     try {
       const response = await fetch('/api/sites')
       
-      // 检查响应状态
-      if (!response.ok) {
+      // 妫€鏌ュ搷搴旂姸鎬?      if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       
-      // 检查响应类型
-      const contentType = response.headers.get('content-type')
+      // 妫€鏌ュ搷搴旂被鍨?      const contentType = response.headers.get('content-type')
       if (!contentType || !contentType.includes('application/json')) {
         throw new Error('Response is not JSON')
       }
@@ -69,12 +64,12 @@ function App() {
       setSites(data)
     } catch (error) {
       console.error('Error fetching sites:', error)
-      // API 请求失败时使用空数据
+      // API 璇锋眰澶辫触鏃朵娇鐢ㄧ┖鏁版嵁
       setSites([])
     }
   }
 
-  // 处理站点选择
+  // 澶勭悊绔欑偣閫夋嫨
   const handleSiteSelect = (id) => {
     setSelectedSites(prev => {
       if (prev.includes(id)) {
@@ -85,7 +80,7 @@ function App() {
     })
   }
 
-  // 处理批量删除
+  // 澶勭悊鎵归噺鍒犻櫎
   const handleBatchDelete = async () => {
     if (selectedSites.length === 0) return
 
@@ -99,34 +94,34 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('删除站点失败')
+        throw new Error('鍒犻櫎绔欑偣澶辫触')
       }
 
       setSites(prev => prev.filter(site => !selectedSites.includes(site.id)))
       setSelectedSites([])
     } catch (error) {
       console.error('Error deleting sites:', error)
-      // 本地开发时模拟删除
+      // 鏈湴寮€鍙戞椂妯℃嫙鍒犻櫎
       setSites(prev => prev.filter(site => !selectedSites.includes(site.id)))
       setSelectedSites([])
     }
   }
 
-  // 处理添加站点
+  // 澶勭悊娣诲姞绔欑偣
   const handleAddSite = (newSite) => {
     setSites(prev => [...prev, newSite])
     setShowAddForm(false)
   }
 
-  // 处理导入完成
+  // 澶勭悊瀵煎叆瀹屾垚
   const handleImportComplete = () => {
-    // 重新加载数据，确保本地存储中的数据被正确显示
+    // 閲嶆柊鍔犺浇鏁版嵁锛岀‘淇濇湰鍦板瓨鍌ㄤ腑鐨勬暟鎹姝ｇ‘鏄剧ず
     const localData = localStorage.getItem('nav_sites')
     setSites(localData ? JSON.parse(localData) : [])
     setShowImportForm(false)
   }
 
-  // 处理密码提交
+  // 澶勭悊瀵嗙爜鎻愪氦
   const handlePasswordSubmit = (e) => {
     e.preventDefault()
     const correctPassword = import.meta.env.VITE_PASSWORD || 'admin123'
@@ -135,17 +130,17 @@ function App() {
       setShowPasswordForm(false)
       setPasswordError('')
     } else {
-      setPasswordError('密码错误，请重新输入')
+      setPasswordError('瀵嗙爜閿欒锛岃閲嶆柊杈撳叆')
     }
   }
 
-  // 处理添加分类
+  // 澶勭悊娣诲姞鍒嗙被
   const handleAddCategory = async (categoryName) => {
     if (!categoryName || categoryName.trim() === '') return
 
     try {
       if (categories.includes(categoryName.trim())) {
-        alert('分类已存在')
+        alert('鍒嗙被宸插瓨鍦?)
         return
       }
 
@@ -158,7 +153,7 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('添加分类失败')
+        throw new Error('娣诲姞鍒嗙被澶辫触')
       }
 
       const updatedSites = await response.json()
@@ -167,22 +162,22 @@ function App() {
       setShowAddCategoryForm(false)
     } catch (error) {
       console.error('Error adding category:', error)
-      alert('分类添加成功（本地模拟）')
+      alert('鍒嗙被娣诲姞鎴愬姛锛堟湰鍦版ā鎷燂級')
       setNewCategory('')
       setShowAddCategoryForm(false)
     }
   }
 
-  // 处理编辑网站
+  // 澶勭悊缂栬緫缃戠珯
   const handleEditSite = (site) => {
     setEditingSite(site)
     setShowEditForm(true)
   }
 
-  // 处理更新网站
+  // 澶勭悊鏇存柊缃戠珯
   const handleUpdateSite = async (updatedSite) => {
     try {
-      // 发送请求到 API 更新网站
+      // 鍙戦€佽姹傚埌 API 鏇存柊缃戠珯
       const response = await fetch('/api/sites', {
         method: 'PUT',
         headers: {
@@ -192,21 +187,21 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('更新网站失败')
+        throw new Error('鏇存柊缃戠珯澶辫触')
       }
 
-      // 刷新网站列表
+      // 鍒锋柊缃戠珯鍒楄〃
       const updatedSites = await response.json()
       setSites(updatedSites)
       setEditingSite(null)
       setShowEditForm(false)
     } catch (error) {
       console.error('Error updating site:', error)
-      // 本地开发时模拟更新网站
+      // 鏈湴寮€鍙戞椂妯℃嫙鏇存柊缃戠珯
       setSites(prev => prev.map(site => site.id === updatedSite.id ? updatedSite : site))
       setEditingSite(null)
       setShowEditForm(false)
-      alert('网站更新成功（本地模拟）')
+      alert('缃戠珯鏇存柊鎴愬姛锛堟湰鍦版ā鎷燂級')
     }
   }
 
@@ -222,7 +217,7 @@ function App() {
       backgroundAttachment: 'fixed',
       transition: 'background 0.5s ease'
     }}>
-      {/* 顶部导航栏 */}
+      {/* 椤堕儴瀵艰埅鏍?*/}
       <header style={{ 
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
         boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
@@ -245,7 +240,7 @@ function App() {
               fontSize: '24px',
               fontWeight: 'bold',
               color: '#111827'
-            }}>我的个人网址导航</h1>
+            }}>鎴戠殑涓汉缃戝潃瀵艰埅</h1>
             {editMode ? (
               <button 
                 onClick={() => setEditMode(false)}
@@ -264,8 +259,7 @@ function App() {
                   e.currentTarget.style.backgroundColor = '#6b7280'
                 }}
               >
-                退出编辑
-              </button>
+                閫€鍑虹紪杈?              </button>
             ) : (
               <button 
                 onClick={() => setShowPasswordForm(true)}
@@ -284,12 +278,12 @@ function App() {
                   e.currentTarget.style.backgroundColor = '#f59e0b'
                 }}
               >
-                编辑
+                缂栬緫
               </button>
             )}
           </div>
           
-          {/* 搜索栏 */}
+          {/* 鎼滅储鏍?*/}
           <div style={{ 
             display: 'flex',
             gap: '8px',
@@ -300,7 +294,7 @@ function App() {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="输入搜索内容..."
+              placeholder="杈撳叆鎼滅储鍐呭..."
               style={{
                 flex: 1,
                 padding: '8px 12px',
@@ -320,11 +314,11 @@ function App() {
                 border: 'none'
               }}
             >
-              搜索
+              鎼滅储
             </button>
           </div>
           
-          {/* 编辑模式工具栏 */}
+          {/* 缂栬緫妯″紡宸ュ叿鏍?*/}
           {editMode && (
             <div style={{ 
               display: 'flex',
@@ -349,7 +343,7 @@ function App() {
                   e.currentTarget.style.backgroundColor = '#2563eb'
                 }}
               >
-                添加站点
+                娣诲姞绔欑偣
               </button>
               <button 
                 onClick={() => setShowImportForm(true)}
@@ -368,8 +362,7 @@ function App() {
                   e.currentTarget.style.backgroundColor = '#16a34a'
                 }}
               >
-                导入收藏夹
-              </button>
+                瀵煎叆鏀惰棌澶?              </button>
               <button 
                 onClick={() => setShowAddCategoryForm(true)}
                 style={{ 
@@ -387,7 +380,7 @@ function App() {
                   e.currentTarget.style.backgroundColor = '#8b5cf6'
                 }}
               >
-                添加分类
+                娣诲姞鍒嗙被
               </button>
               {filteredSites.length > 0 && (
                 <button 
@@ -413,7 +406,7 @@ function App() {
                     e.currentTarget.style.backgroundColor = '#8b5cf6'
                   }}
                 >
-                  {selectedSites.length === filteredSites.length ? '取消全选' : '全选'}
+                  {selectedSites.length === filteredSites.length ? '鍙栨秷鍏ㄩ€? : '鍏ㄩ€?}
                 </button>
               )}
               {selectedSites.length > 0 && (
@@ -434,7 +427,7 @@ function App() {
                     e.currentTarget.style.backgroundColor = '#dc2626'
                   }}
                 >
-                  批量删除 ({selectedSites.length})
+                  鎵归噺鍒犻櫎 ({selectedSites.length})
                 </button>
               )}
             </div>
@@ -442,7 +435,7 @@ function App() {
         </div>
       </header>
 
-      {/* 分类导航 */}
+      {/* 鍒嗙被瀵艰埅 */}
       <div style={{ 
         maxWidth: '1280px',
         margin: '0 auto',
@@ -483,7 +476,7 @@ function App() {
         ))}
       </div>
 
-      {/* 站点网格 */}
+      {/* 绔欑偣缃戞牸 */}
       <main style={{ 
         maxWidth: '1280px',
         margin: '20px auto',
@@ -492,7 +485,7 @@ function App() {
         backdropFilter: 'blur(10px)',
         borderRadius: '8px'
       }}>
-        {/* 分类标题 */}
+        {/* 鍒嗙被鏍囬 */}
         {activeCategory && (
           <h2 style={{ 
             fontSize: '18px',
@@ -502,7 +495,7 @@ function App() {
           }}>{activeCategory}</h2>
         )}
         
-        {/* 站点图标网格 */}
+        {/* 绔欑偣鍥炬爣缃戞牸 */}
         <div style={{ 
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
@@ -537,8 +530,8 @@ function App() {
                 href={site.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`打开 ${site.name}`}
-                onClick={(e) => e.stopPropagation()}
+                aria-label={`鎵撳紑 ${site.name}`}
+                onClick={(e) => !editMode && e.stopPropagation()}
                 style={{
                   width: '60px',
                   height: '60px',
@@ -614,11 +607,11 @@ function App() {
         }}>
           <p style={{ 
             color: '#6b7280'
-          }}>暂无站点，请添加或导入收藏夹</p>
+          }}>鏆傛棤绔欑偣锛岃娣诲姞鎴栧鍏ユ敹钘忓す</p>
         </div>
       )}
 
-      {/* 添加站点表单 */}
+      {/* 娣诲姞绔欑偣琛ㄥ崟 */}
       {showAddForm && (
         <AddSiteForm 
           onAdd={handleAddSite} 
@@ -627,7 +620,7 @@ function App() {
         />
       )}
 
-      {/* 导入收藏夹表单 */}
+      {/* 瀵煎叆鏀惰棌澶硅〃鍗?*/}
       {showImportForm && (
         <ImportBookmarks 
           onComplete={handleImportComplete} 
@@ -635,7 +628,7 @@ function App() {
         />
       )}
 
-      {/* 密码表单 */}
+      {/* 瀵嗙爜琛ㄥ崟 */}
       {showPasswordForm && (
         <div style={{
           position: 'fixed',
@@ -661,7 +654,7 @@ function App() {
               fontWeight: '600',
               color: '#111827',
               margin: '0 0 16px 0'
-            }}>请输入密码以进入编辑模式</h2>
+            }}>璇疯緭鍏ュ瘑鐮佷互杩涘叆缂栬緫妯″紡</h2>
             <form onSubmit={handlePasswordSubmit}>
               <div style={{
                 marginBottom: '16px'
@@ -672,7 +665,7 @@ function App() {
                   fontWeight: '500',
                   color: '#374151',
                   marginBottom: '6px'
-                }}>密码</label>
+                }}>瀵嗙爜</label>
                 <input
                   type="password"
                   value={password}
@@ -715,7 +708,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  取消
+                  鍙栨秷
                 </button>
                 <button
                   type="submit"
@@ -728,7 +721,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  确定
+                  纭畾
                 </button>
               </div>
             </form>
@@ -736,7 +729,7 @@ function App() {
         </div>
       )}
 
-      {/* 添加分类表单 */}
+      {/* 娣诲姞鍒嗙被琛ㄥ崟 */}
       {showAddCategoryForm && (
         <div style={{
           position: 'fixed',
@@ -762,7 +755,7 @@ function App() {
               fontWeight: '600',
               color: '#111827',
               margin: '0 0 16px 0'
-            }}>添加分类</h2>
+            }}>娣诲姞鍒嗙被</h2>
             <form onSubmit={(e) => {
               e.preventDefault()
               handleAddCategory(newCategory)
@@ -776,7 +769,7 @@ function App() {
                   fontWeight: '500',
                   color: '#374151',
                   marginBottom: '6px'
-                }}>分类名称</label>
+                }}>鍒嗙被鍚嶇О</label>
                 <input
                   type="text"
                   value={newCategory}
@@ -788,7 +781,7 @@ function App() {
                     border: '1px solid #d1d5db',
                     fontSize: '14px'
                   }}
-                  placeholder="例如：搜索"
+                  placeholder="渚嬪锛氭悳绱?
                   required
                 />
               </div>
@@ -812,7 +805,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  取消
+                  鍙栨秷
                 </button>
                 <button
                   type="submit"
@@ -825,7 +818,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  添加
+                  娣诲姞
                 </button>
               </div>
             </form>
@@ -833,7 +826,7 @@ function App() {
         </div>
       )}
 
-      {/* 编辑网站表单 */}
+      {/* 缂栬緫缃戠珯琛ㄥ崟 */}
       {showEditForm && editingSite && (
         <div style={{
           position: 'fixed',
@@ -866,7 +859,7 @@ function App() {
                 fontSize: '20px',
                 fontWeight: 'bold',
                 color: '#111827'
-              }}>编辑站点</h2>
+              }}>缂栬緫绔欑偣</h2>
               <button 
                 onClick={() => {
                   setShowEditForm(false)
@@ -886,7 +879,7 @@ function App() {
                   e.currentTarget.style.color = '#6b7280'
                 }}
               >
-                ×
+                脳
               </button>
             </div>
 
@@ -907,3 +900,7 @@ function App() {
 }
 
 export default App
+
+
+
+
