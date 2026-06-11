@@ -89,7 +89,7 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('Delete failed?)
+        throw new Error('Delete failed')
       }
 
       setSites(prev => prev.filter(site => !selectedSites.includes(site.id)))
@@ -642,6 +642,7 @@ function App() {
 }
 
 export default App
+
 
 
 
