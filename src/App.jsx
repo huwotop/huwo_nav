@@ -31,9 +31,9 @@ function App() {
     fetchSites()
   }, [])
 
-  // 鎻愬彇鍒嗙被
+  // 自动设置默认分类
   useEffect(() => {
-    // 濡傛灉鏈夊垎绫讳笖娌℃湁閫変腑鍒嗙被锛岄粯璁ら€変腑绗竴涓?    if (categories.length > 0 && !activeCategory) {
+    if (categories.length > 0 && !activeCategory) {
       setActiveCategory(categories[0])
     }
   }, [categories, activeCategory])
@@ -900,6 +900,7 @@ function App() {
 }
 
 export default App
+
 
 
 
