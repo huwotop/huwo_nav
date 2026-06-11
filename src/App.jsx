@@ -89,7 +89,7 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('删除站点失败')
+        throw new Error('鍒犻櫎绔欑偣澶辫触')
       }
 
       setSites(prev => prev.filter(site => !selectedSites.includes(site.id)))
@@ -120,7 +120,7 @@ function App() {
       setShowPasswordForm(false)
       setPasswordError('')
     } else {
-      setPasswordError('密码错误，请重新输入')
+      setPasswordError('瀵嗙爜閿欒锛岃閲嶆柊杈撳叆')
     }
   }
 
@@ -129,7 +129,7 @@ function App() {
 
     try {
       if (categories.includes(categoryName.trim())) {
-        alert('分类已存在')
+        alert('鍒嗙被宸插瓨鍦?)
         return
       }
 
@@ -142,7 +142,7 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('添加分类失败')
+        throw new Error('娣诲姞鍒嗙被澶辫触')
       }
 
       const updatedSites = await response.json()
@@ -151,7 +151,7 @@ function App() {
       setShowAddCategoryForm(false)
     } catch (error) {
       console.error('Error adding category:', error)
-      alert('分类添加成功（本地模拟）')
+      alert('鍒嗙被娣诲姞鎴愬姛锛堟湰鍦版ā鎷燂級')
       setNewCategory('')
       setShowAddCategoryForm(false)
     }
@@ -173,7 +173,7 @@ function App() {
       })
 
       if (!response.ok) {
-        throw new Error('更新站点失败')
+        throw new Error('鏇存柊绔欑偣澶辫触')
       }
 
       const updatedSites = await response.json()
@@ -185,7 +185,7 @@ function App() {
       setSites(prev => prev.map(site => site.id === updatedSite.id ? updatedSite : site))
       setEditingSite(null)
       setShowEditForm(false)
-      alert('站点更新成功（本地模拟）')
+      alert('绔欑偣鏇存柊鎴愬姛锛堟湰鍦版ā鎷燂級')
     }
   }
 
@@ -223,7 +223,7 @@ function App() {
               fontSize: '24px',
               fontWeight: 'bold',
               color: '#111827'
-            }}>我的个人网址导航</h1>
+            }}>鎴戠殑涓汉缃戝潃瀵艰埅</h1>
             {editMode ? (
               <button 
                 onClick={() => setEditMode(false)}
@@ -236,8 +236,7 @@ function App() {
                   border: 'none'
                 }}
               >
-                退出编辑
-              </button>
+                閫€鍑虹紪杈?              </button>
             ) : (
               <button 
                 onClick={() => setShowPasswordForm(true)}
@@ -250,7 +249,7 @@ function App() {
                   border: 'none'
                 }}
               >
-                编辑
+                缂栬緫
               </button>
             )}
           </div>
@@ -265,7 +264,7 @@ function App() {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="输入搜索内容..."
+              placeholder="杈撳叆鎼滅储鍐呭..."
               style={{
                 flex: 1,
                 padding: '8px 12px',
@@ -285,7 +284,7 @@ function App() {
                 border: 'none'
               }}
             >
-              搜索
+              鎼滅储
             </button>
           </div>
           
@@ -307,7 +306,7 @@ function App() {
                   border: 'none'
                 }}
               >
-                添加站点
+                娣诲姞绔欑偣
               </button>
               <button 
                 onClick={() => setShowImportForm(true)}
@@ -320,8 +319,7 @@ function App() {
                   border: 'none'
                 }}
               >
-                导入收藏夹
-              </button>
+                瀵煎叆鏀惰棌澶?              </button>
               <button 
                 onClick={() => setShowAddCategoryForm(true)}
                 style={{ 
@@ -333,7 +331,7 @@ function App() {
                   border: 'none'
                 }}
               >
-                添加分类
+                娣诲姞鍒嗙被
               </button>
               {filteredSites.length > 0 && (
                 <button 
@@ -353,7 +351,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  {selectedSites.length === filteredSites.length ? '取消全选' : '全选'}
+                  {selectedSites.length === filteredSites.length ? '鍙栨秷鍏ㄩ€? : '鍏ㄩ€?}
                 </button>
               )}
               {selectedSites.length > 0 && (
@@ -368,7 +366,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  批量删除 ({selectedSites.length})
+                  鎵归噺鍒犻櫎 ({selectedSites.length})
                 </button>
               )}
             </div>
@@ -449,7 +447,7 @@ function App() {
                 href={site.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`打开 ${site.name}`}
+                aria-label={`鎵撳紑 ${site.name}`}
                 onClick={(e) => !editMode && e.stopPropagation()}
                 style={{
                   width: '60px',
@@ -521,7 +519,7 @@ function App() {
                       cursor: 'pointer'
                     }}
                   >
-                    编辑
+                    缂栬緫
                   </button>
                 </div>
               )}
@@ -544,7 +542,7 @@ function App() {
           onCancel={() => setShowImportForm(false)} 
         />
       )}
-      {/* 密码表单 */}
+      {/* 瀵嗙爜琛ㄥ崟 */}
       {showPasswordForm && (
         <div style={{
           position: 'fixed',
@@ -570,7 +568,7 @@ function App() {
               fontWeight: '600',
               color: '#111827',
               margin: '0 0 16px 0'
-            }}>请输入密码以进入编辑模式</h2>
+            }}>璇疯緭鍏ュ瘑鐮佷互杩涘叆缂栬緫妯″紡</h2>
             <form onSubmit={handlePasswordSubmit}>
               <div style={{
                 marginBottom: '16px'
@@ -581,7 +579,7 @@ function App() {
                   fontWeight: '500',
                   color: '#374151',
                   marginBottom: '6px'
-                }}>密码</label>
+                }}>瀵嗙爜</label>
                 <input
                   type="password"
                   value={password}
@@ -624,7 +622,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  取消
+                  鍙栨秷
                 </button>
                 <button
                   type="submit"
@@ -637,7 +635,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  确定
+                  纭畾
                 </button>
               </div>
             </form>
