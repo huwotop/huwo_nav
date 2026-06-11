@@ -275,7 +275,7 @@ function App() {
               }}
             />
             <button
-              onClick={() => setSearchTerm(\'\')}
+              onClick={() => setSearchTerm('')}
               style={{
                 padding: '8px 16px',
                 backgroundColor: '#2563eb',
@@ -353,7 +353,7 @@ function App() {
                     border: 'none'
                   }}
                 >
-                  {selectedSites.length === filteredSites.length ? \'取消全选\' : \'全选\'}
+                  {selectedSites.length === filteredSites.length ? '取消全选' : '全选'}
                 </button>
               )}
               {selectedSites.length > 0 && (
@@ -394,11 +394,11 @@ function App() {
             style={{ 
               padding: '8px 16px',
               borderRadius: '6px 6px 0 0',
-              backgroundColor: activeCategory === category ? '#2563eb' : \'white\',
-              color: activeCategory === category ? \'white\' : \'#4b5563\',
-              cursor: \'pointer\',
-              border: activeCategory === category ? \'1px solid #2563eb\' : \'1px solid #e5e7eb\',
-              borderBottom: activeCategory === category ? \'1px solid #2563eb\' : \'1px solid #e5e7eb\'
+              backgroundColor: activeCategory === category ? '#2563eb' : 'white',
+              color: activeCategory === category ? 'white' : '#4b5563',
+              cursor: 'pointer',
+              border: activeCategory === category ? '1px solid #2563eb' : '1px solid #e5e7eb',
+              borderBottom: activeCategory === category ? '1px solid #2563eb' : '1px solid #e5e7eb'
             }}
           >
             {category}
@@ -531,4 +531,5 @@ function App() {
 }
 
 export default App
+
 
