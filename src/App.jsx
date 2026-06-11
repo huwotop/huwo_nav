@@ -158,7 +158,7 @@ function App() {
       <header style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', backdropFilter: 'blur(10px)' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: '#111827' }}>我的网址导航</h1>
+            <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: '#111827' }}>{import.meta.env.VITE_SITE_NAME || '我的网址导航'}</h1>
             {editMode ? (
               <button onClick={() => setEditMode(false)} style={{ padding: '8px 16px', backgroundColor: '#6b7280', color: 'white', borderRadius: '6px', cursor: 'pointer', border: 'none' }}>退出编辑</button>
             ) : (
@@ -242,3 +242,4 @@ function App() {
   )
 }
 export default App
+
